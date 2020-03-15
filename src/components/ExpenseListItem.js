@@ -1,13 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
+import numeral from 'numeral';
 
 const centsToDollars = amount => {
-   return `$${(amount / 100).toFixed(2)}`;
+   // return `$${(amount / 100).toFixed(2)}`;
+   return numeral(amount / 100).format('$0,0.00');
 };
 
 const millisecondsToDate = timeInMs => {
-   return moment(timeInMs).format('MMM Do, YYYY');
+   return moment(timeInMs).format('MMMM Do, YYYY');
 };
 
 const ExpenseListItem = ({ id, description, amount, createdAt }) => (
