@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import ExpenseForm from './ExpenseForm';
-import { addExpense } from './../actions/expenses';
+import { startAddExpense } from './../actions/expenses';
 
 /* 
    Exported ONLY to use it as an UNCONNECTED version in Snapshot Testing
@@ -19,7 +19,7 @@ export class AddExpensePage extends React.Component {
          this.props.dispatch(addExpense(expense));
       */
 
-      this.props.addExpense(expense);
+      this.props.startAddExpense(expense);
       this.props.history.push('/');
    };
 
@@ -35,7 +35,7 @@ export class AddExpensePage extends React.Component {
 
 // To make it easier to use spies during testing
 const mapDispatchToProps = dispatch => ({
-   addExpense: expense => dispatch(addExpense(expense))
+   startAddExpense: expense => dispatch(startAddExpense(expense))
 });
 
 /* export default connect()(AddExpensePage); */
