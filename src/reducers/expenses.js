@@ -1,5 +1,7 @@
 // Expenses Reducer
 
+import { act } from 'react-test-renderer';
+
 const expensesReducerDefaultState = [];
 
 export default (state = expensesReducerDefaultState, action) => {
@@ -19,6 +21,8 @@ export default (state = expensesReducerDefaultState, action) => {
                return expense; // DO NOTHING
             }
          });
+      case 'SET_EXPENSES':
+         return action.expenses;
       default:
          return state;
    }
