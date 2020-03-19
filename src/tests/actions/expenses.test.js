@@ -6,7 +6,9 @@ import {
    removeExpense,
    editExpense,
    setExpenses,
-   startSetExpenses
+   startSetExpenses,
+   startRemoveExpense,
+   startEditExpense
 } from './../../actions/expenses';
 import expenses from './../fixtures/expenses';
 import database from './../../firebase/firebase';
@@ -144,6 +146,57 @@ test('should fetch the expenses from firebase', done => {
       });
 
       done();
+   });
+});
+
+test('should remove expenses from firebase and store', done => {
+   const store = createMockStore({});
+
+   const id = 1;
+
+   store.dispatch(startRemoveExpense({ id })).then(() => {
+      const action = store.getActions();
+
+      expect(action[0]).toEqual({
+         type: 'REMOVE_EXPENSE',
+         id
+      });
+
+      database
+         .ref(`expenses/${id}`)
+         .once('value')
+         .then(snapshot => {
+            expect(snapshot.val()).toBeFalsy();
+            done();
+         });
+   });
+});
+
+test('should edit expenses in firebase and store', done => {
+   const store = createMockStore({});
+
+   const id = expenses[0].id;
+   const updates = {
+      note: 'A new note from test'
+   };
+
+   store.dispatch(startEditExpense(id, updates)).then(() => {
+      const action = store.getActions();
+
+      expect(action[0]).toEqual({
+         type: 'EDIT_EXPENSE',
+         id,
+         updates
+      });
+
+      database
+         .ref(`expenses/${id}`)
+         .once('value')
+         .then(snapshot => {
+            expect(snapshot.key).toBe(id);
+            expect(snapshot.val().note).toBe(updates.note);
+            done();
+         });
    });
 });
 

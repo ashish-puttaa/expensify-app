@@ -2,13 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { DateRangePicker } from 'react-dates';
 import moment from 'moment';
-import {
-   setTextFilter,
-   sortByDate,
-   sortByAmount,
-   setStartDate,
-   setEndDate
-} from './../actions/filters';
+import { setTextFilter, sortByDate, sortByAmount, setStartDate, setEndDate } from './../actions/filters';
 
 /* 
    Exported ONLY to use it as an UNCONNECTED version in Snapshot Testing
@@ -43,15 +37,8 @@ export class ExpenseListFilters extends React.Component {
    render() {
       return (
          <div>
-            <input
-               type="text"
-               value={this.props.filters.text}
-               onChange={this.onTextChange}
-            />
-            <select
-               value={this.props.filters.sortBy}
-               onChange={this.onSortChange}
-            >
+            <input type="text" value={this.props.filters.text} onChange={this.onTextChange} />
+            <select value={this.props.filters.sortBy} onChange={this.onSortChange}>
                <option value="date">Date</option>
                <option value="amount">Amount</option>
             </select>
@@ -81,7 +68,7 @@ const mapDispatchToProps = dispatch => ({
    setStartDate: startDate => dispatch(setStartDate(startDate)),
    setEndDate: endDate => dispatch(setEndDate(endDate)),
    setTextFilter: text => dispatch(setTextFilter(text)),
-   sortByDate: () => props.dispatch(sortByDate()),
+   sortByDate: () => dispatch(sortByDate()),
    sortByAmount: () => dispatch(sortByAmount())
 });
 
